@@ -39,7 +39,7 @@ for (i, rect) in enumerate(rects):
 	# determine the facial landmarks for the face region, then
 	# convert the facial landmark (x, y)-coordinates to a NumPy
 	# array
-	count+=1
+
 	shape = predictor(gray, rect)
 	shape = face_utils.shape_to_np(shape)
 
@@ -55,10 +55,15 @@ for (i, rect) in enumerate(rects):
 	# loop over the (x, y)-coordinates for the facial landmarks
 	# and draw them on the image
 	for (x, y) in shape:
+		count += 1
 		cv2.circle(image, (x, y), 1, (0, 0, 255), -1)
-		print(x,y)
 
 print(count)
 # show the output image with the face detections + facial landmarks
 cv2.imshow("Output", image)
-cv2.waitKey(0)
+
+# if the `q` key was pressed, break from the loop
+while True:
+	key = cv2.waitKey(1) & 0xFF
+	if key == ord("q"):
+		break
